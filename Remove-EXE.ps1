@@ -1,0 +1,1 @@
+Remove-Item * -Include *.exe -Exclude *.c,*.h,*.md -recurse

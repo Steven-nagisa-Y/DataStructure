@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX 999
+#define MAX 255
 
 /**
  * 定义：串是由零个或多个字符组成的有限序列，字符的个数成为串的长度。数组的长度比串多1，因为数组末尾含有\0
@@ -26,6 +26,11 @@ typedef struct String {
     unsigned int len;
 } Str;
 
+/**
+ * @brief 初始化变长串
+ *
+ * @return Str* 返回串的首地址
+ */
 Str *initStr() {
     Str *res = (Str *)malloc(sizeof(Str));
     res->chs = NULL;
@@ -33,6 +38,14 @@ Str *initStr() {
     return res;
 }
 
+/**
+ * @brief 为串赋值
+ *
+ * @param str 变长串的首地址
+ * @param c 被赋值的字符串
+ * @return true 成功
+ * @return false 失败
+ */
 bool assignStr(Str *str, char *c) {
     if (str->chs) free(str->chs);
     unsigned int len = 0;
@@ -55,8 +68,19 @@ bool assignStr(Str *str, char *c) {
     return true;
 }
 
+/**
+ * @brief 返回串的长度
+ *
+ * @param str 串
+ * @return unsigned int 长度
+ */
 unsigned int len(Str str) { return str.len; }
 
+/**
+ * @brief 打印串长和串
+ *
+ * @param str 串
+ */
 void printStr(Str *str) {
     if (str == NULL) {
         printf("NULL!");
@@ -83,6 +107,15 @@ int compareStr(Str str1, Str str2) {
     return str1.len - str2.len;
 }
 
+/**
+ * @brief 拼接两个字符串
+ *
+ * @param str1 第一个字符串
+ * @param str2 第二个字符串
+ * @param str 拼接后的字符串
+ * @return true 成功
+ * @return false 失败
+ */
 bool concatStr(Str str1, Str str2, Str *str) {
     if (str->chs) {
         free(str->chs);
@@ -96,6 +129,11 @@ bool concatStr(Str str1, Str str2, Str *str) {
     str->len = str1.len + str2.len;
 }
 
+/**
+ * @brief 清空字符串
+ *
+ * @param str 需要被清空的字符串首地址
+ */
 void freeStr(Str *str) {
     if (str->chs) {
         free(str->chs);
@@ -104,6 +142,14 @@ void freeStr(Str *str) {
     str->len = 0;
 }
 
+/**
+ * @brief 求主串的子串
+ *
+ * @param str 主串
+ * @param start 开始下标
+ * @param len 子串长度
+ * @return Str* 字串的首地址
+ */
 Str *subStr(Str str, unsigned int start, unsigned int len) {
     Str *res = (Str *)malloc(sizeof(Str));
     freeStr(res);
@@ -117,7 +163,14 @@ Str *subStr(Str str, unsigned int start, unsigned int len) {
     return res;
 }
 
-unsigned int findStr(Str str, Str target) {
+/**
+ * @brief 简单查找匹配子串
+ *
+ * @param str 主串
+ * @param target 子串
+ * @return int 匹配的位置，未匹配为-1
+ */
+int findStr(Str str, Str target) {
     int i = 0, j = 0, k = i;
     while (i <= str.len && j <= target.len) {
         if (str.chs[i] == target.chs[j]) {
@@ -128,39 +181,63 @@ unsigned int findStr(Str str, Str target) {
             i = ++k;
         }
     }
-    return j > target.len ? k : 0;
+    return j > target.len ? k : -1;
 }
 
+/**
+ * @brief 获得KMP子串最长重复前后缀
+ *
+ * @param str 子串
+ * @return int* 最长前后缀数组首地址，长度为[0]
+ */
 int *getKMPNext(Str str) {
-    int i = 0, j = 0;
-    int *next = (int *)malloc(sizeof(int) * str.len);
-    next[0] = 0;
+    if (str.len == 1) {
+        int *next = (int *)malloc(sizeof(int));
+        next[0] = 0;
+        return next;
+    } else if (str.len == 0)
+        return NULL;
+
+    int i = 1, j = 0;
+    int *next = (int *)malloc(sizeof(int) * (str.len));
+    // next数组从1开始，next[0]为长度
+    next[0] = str.len;
+    next[1] = 0;
     while (i < str.len) {
-        if (j == 0 || str.chs[i] == str.chs[j]) {
+        if (j == 0 || str.chs[i - 1] == str.chs[j - 1]) {
             ++i;
             ++j;
             next[i] = j;
+
         } else
-            j = next[j - 1];
+            j = next[j];
     }
     return next;
 }
 
 /**
- * @brief 优化方案
+ * @brief 获得KMP子串最长重复前后缀优化方案
  *
- * @param str
- * @return int*
+ * @param str 子串
+ * @return int* 最长前后缀数组首地址，长度为[0]
  */
 int *getKMPnextVal(Str str) {
-    int i = 0, j = 0;
+    if (str.len == 1) {
+        int *next = (int *)malloc(sizeof(int));
+        next[0] = 0;
+        return next;
+    } else if (str.len == 0)
+        return NULL;
+
+    int i = 1, j = 0;
     int *nextVal = (int *)malloc(sizeof(int) * str.len);
-    nextVal[0] = 0;
+    nextVal[0] = str.len;
+    nextVal[1] = 0;
     while (i < str.len) {
-        if (j == 0 || str.chs[i] == str.chs[j]) {
+        if (j == 0 || str.chs[i - 1] == str.chs[j - 1]) {
             ++i;
             ++j;
-            if (str.chs[i] != str.chs[j])
+            if (str.chs[i - 1] != str.chs[j - 1])
                 nextVal[i] = j;
             else
                 nextVal[i] = nextVal[j];
@@ -170,18 +247,25 @@ int *getKMPnextVal(Str str) {
     return nextVal;
 }
 
-unsigned int KMP(Str str, Str substr) {
+/**
+ * @brief 快速匹配算法KMP
+ *
+ * @param str 主串
+ * @param substr 子串
+ * @return int 匹配位置，未匹配则返回-1
+ */
+int KMP(Str str, Str substr) {
     int *next = getKMPnextVal(substr);
-    int i = 0, j = 0;
-    while (i < str.len && j < substr.len) {
-        if (j == 0 || str.chs[i] == substr.chs[j]) {
+    int i = 1, j = 1;
+    while (i <= str.len && j <= substr.len) {
+        if (j == 0 || str.chs[i - 1] == substr.chs[j - 1]) {
             ++i;
             ++j;
         } else
-            j = next[j - 1];
+            j = next[j];
     }
-    if (j >= substr.len)
+    if (j > substr.len)
         return i - substr.len;
     else
-        return 0;
+        return -1;
 }

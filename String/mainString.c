@@ -19,7 +19,7 @@ int main(int argc, char const *argv[]) {
     printStr(s3);
     s3 = subStr(*s1, 5, 5);
     printStr(s3);
-    unsigned int idx = KMP(*s1, *s3);
-    printf("Find \"%s\" in \"%s\" at %d", s3->chs, s1->chs, idx);
+    int idx = KMP(*s1, *s3);
+    printf("Find \"%s\" in \"%s\" at %d\n", s3->chs, s1->chs, idx);
     return 0;
 }
