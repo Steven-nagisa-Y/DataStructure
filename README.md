@@ -15,25 +15,35 @@
 │  char.c
 │  LICENSE
 │  README.md
+│  Remove-EXE.ps1
+│
+├─Array
+│      Array.h
+│      mainMatrix.c
+│      Matrix.h
+│      Q-Array-recur.c
+│      Q-Move-zero.c
 │
 ├─LinearTable
 │      DoubleLinkedList.h
 │      LinearTable.c
-│      LinkedList.h
-│      Q-Diff-LinkedList.c
-│      Q-Find-last.c
-│      Q-Move-list.c
-│      Q-Print-from-last.c
-│      Q-Reverse-linkedlist.c
-│      Q-Sort-two-sector.c
-│      SequenceList.h
+│      Stack.h
 │
-└─StackQueue
-        mainQueue.c
-        mainStack.c
-        Q-valid-bracket.c
-        Queue.h
-        Stack.h
+├─String
+│      mainString.c
+│      Q-Delete-char.c
+│      Q-KMP.c
+│      Q-Replace-char.c
+│      Q-Reverse-string.c
+│      String.h
+│
+└─Tree
+        Huffman.c
+        mainTree.c
+        Q-build-bintree.c
+        Q-Calc-tree.c
+        Q-find-kth.c
+        Tree.h
 ```
 
 ## 注释
