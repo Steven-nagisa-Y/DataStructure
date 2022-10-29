@@ -74,15 +74,16 @@ int main() {
     for (int i = 0; i < N; ++i) {
         G->vex[i] = i;
         G->edges[i][i] = 0;
-        for (int j = i + 1; j < N; ++j) {
+        for (int j = 0; j < N; ++j) {
             int tmp;
             // printf("%d to %d: ", i, j);
-            scanf("%d", &tmp);
-            if (tmp < 256) {
-                ++G->e;
+            if (j != i) {
+                scanf("%d", &tmp);
+                if (tmp < 256) {
+                    ++G->e;
+                }
+                G->edges[i][j] = tmp;
             }
-            G->edges[i][j] = tmp;
-            G->edges[j][i] = tmp;
         }
     }
     printf("Vertex Matrix:\n");
