@@ -31,10 +31,10 @@ void merge(int A[], int low, int mid, int high) {
  * @param low
  * @param high
  */
-void MergeSort(int R[], int low, int high) {
+void MergeSort(int L[], int low, int high) {
     if (low >= high) return;
     int mid = low + (high - low) / 2;
-    MergeSort(R, low, mid);
-    MergeSort(R, mid + 1, high);
-    merge(R, low, mid, high);
+    MergeSort(L, low, mid);
+    MergeSort(L, mid + 1, high);
+    merge(L, low, mid, high);
 }

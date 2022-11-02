@@ -3,19 +3,19 @@
  * 时间复杂度：O(n^2)
  * 空间复杂度：O(1)
  *
- * @param R
+ * @param L
  * @param n
  */
-void InsertSort(int R[], int n) {
+void InsertSort(int L[], int n) {
     int tmp;
     for (int i = 1; i < n; ++i) {
-        tmp = R[i];
+        tmp = L[i];
         int j = i - 1;
-        while (j >= 0 && tmp < R[j]) {
-            R[j + 1] = R[j];
+        while (j >= 0 && tmp < L[j]) {
+            L[j + 1] = L[j];
             --j;
         }
-        R[j + 1] = tmp;
+        L[j + 1] = tmp;
     }
 }
 
@@ -24,20 +24,20 @@ void InsertSort(int R[], int n) {
  * 时间复杂度：O(n^2)
  * 空间复杂度：O(1)
  *
- * @param R
+ * @param L
  * @param n
  */
-void ShellSort(int R[], int n) {
+void ShellSort(int L[], int n) {
     int step, tmp;
     for (step = n >> 1; step > 0; step >>= 1) {
         for (int i = step; i < n; ++i) {
-            tmp = R[i];
+            tmp = L[i];
             int j = i - step;
-            while (j >= 0 && R[j] > tmp) {
-                R[j + step] = R[j];
+            while (j >= 0 && L[j] > tmp) {
+                L[j + step] = L[j];
                 j -= step;
             }
-            R[j + step] = tmp;
+            L[j + step] = tmp;
         }
     }
 }

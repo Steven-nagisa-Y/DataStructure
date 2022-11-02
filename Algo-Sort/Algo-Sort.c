@@ -4,7 +4,7 @@
 #include "InsertSort.c"
 #include "MergeSort.c"
 #include "RadixSort.c"
-#include "SelectionSort.c"
+#include "SelectSort.c"
 #include "SwapSort.c"
 
 int main(int argc, char const *argv[]) {
