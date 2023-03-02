@@ -67,6 +67,13 @@ void mergeRef(ListNode *A, ListNode *B, ListNode *C) {
     }
 }
 
+/**
+ * @brief Create a Linked List from Tail
+ *
+ * @param a
+ * @param n
+ * @return ListNode*
+ */
 ListNode *createListTail(int a[], int n) {
     ListNode *s, *r;
     int i;
@@ -83,6 +90,13 @@ ListNode *createListTail(int a[], int n) {
     return R;
 }
 
+/**
+ * @brief Create a Linked List from Head
+ *
+ * @param a
+ * @param n
+ * @return ListNode*
+ */
 ListNode *createListHead(int a[], int n) {
     ListNode *s;
     int i;
@@ -97,6 +111,13 @@ ListNode *createListHead(int a[], int n) {
     return R;
 }
 
+/**
+ * @brief 删除链表节点
+ *
+ * @param C 链表
+ * @param x 目标节点值
+ * @return int
+ */
 int deleteNode(ListNode *C, int x) {
     ListNode *p, *q;
     p = C;
