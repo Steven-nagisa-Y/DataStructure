@@ -73,7 +73,7 @@ void enLQueue(LQueue *lq, int val) {
 
 bool deLQueue(LQueue *lq, int *val) {
     QNode *node;
-    if (lq->rear = NULL)
+    if (lq->rear == NULL)
         return false;
     else
         node = lq->front;
